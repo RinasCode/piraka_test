@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Users</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <h2>Daftar User</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Username</th>
+          <th>CreateTime</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="userTable"></tbody>
+    </table>
+
+    <script>
+      fetch("/getUsers")
+        .then((response) => response.json())
+        .then((users) => {
+          const userTable = document.getElementById("userTable");
+          users.forEach((user, index) => {
+            userTable.innerHTML += `<tr>
+                      <td>${index + 1}</td>
+                      <td>${user.username}</td>
+                      <td>${user.createTime}</td>
+                      <td>
+                          <a href="/editUser.html?id=${user.id}">Edit</a> |
+                          <a href="/deleteUser/${user.id}">Delete</a>
+                      </td>
+                  </tr>`;
+          });
+        });
+    </script>
+  </body>
+</html>
